@@ -13,7 +13,7 @@ _level = 'debug'
 
 
 def parse_prompts(prompts):
-    prompt = ''.join(prompts[0:])
+    prompt = ''.join(prompts[:])
     prompt = f"{anthropic.HUMAN_PROMPT} {prompt}{anthropic.AI_PROMPT}"
 
     if _level == 'debug':

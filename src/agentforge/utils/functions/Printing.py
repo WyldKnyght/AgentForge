@@ -19,7 +19,7 @@ class Printing:
         # Print the task result
         cprint(f"***** {desc} *****", 'green', attrs=['bold'])
         cprint(f"{encode_msg(result)}", 'white')
-        cprint(f"*****", 'green', attrs=['bold'])
+        cprint("*****", 'green', attrs=['bold'])
 
         # Save the result to a log.txt file in the /Logs/ folder
         log_folder = "Logs"

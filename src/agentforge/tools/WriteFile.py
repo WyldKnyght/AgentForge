@@ -42,10 +42,7 @@ class WriteFile:
             return message
 
         success, message = self.write_to_file(folder, file, text, mode)
-        if not success:
-            return message
-
-        return self.generate_message(file, folder, text)
+        return message if not success else self.generate_message(file, folder, text)
 
 
 # def read_file(file_path):

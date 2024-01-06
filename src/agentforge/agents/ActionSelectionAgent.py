@@ -69,12 +69,11 @@ class ActionSelectionAgent(Agent):
             self.output = f"The '{selected_action}' action does not exist. It is very likely the agent did not correctly choose an action from the given list."
 
     def parse_actions(self):
-        parsed_actions = {}
-
         if 'failed' not in self.actions:
+            parsed_actions = {}
+
             for metadata in self.actions.get("metadatas", [])[0]:
-                action_name = metadata.get("Name")
-                if action_name:
+                if action_name := metadata.get("Name"):
                     metadata.pop('timestamp', None)
                     parsed_actions[action_name] = metadata
 

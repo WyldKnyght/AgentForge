@@ -95,20 +95,21 @@ class StorageInterface:
     #         print(f"An error occurred: {e}")
 
     def initialize_storage(self):
-        if self.storage_utils is None:
-            storage_api = self.config.settings['storage']['StorageAPI']
+        if self.storage_utils is not None:
+            return
+        storage_api = self.config.settings['storage']['StorageAPI']
 
-            if storage_api == 'ChromaDB':
-                self.initialize_chroma()
-                return
-            if storage_api == 'rabbitmq':
-                # self.initialize_rabbitmq()
-                return
-            if storage_api == 'Pinecone':
-                # self.initialize_pinecone()
-                return
-            else:
-                raise ValueError(f"Unsupported Storage API library: {storage_api}")
+        if storage_api == 'ChromaDB':
+            self.initialize_chroma()
+            return
+        if storage_api == 'rabbitmq':
+            # self.initialize_rabbitmq()
+            return
+        if storage_api == 'Pinecone':
+            # self.initialize_pinecone()
+            return
+        else:
+            raise ValueError(f"Unsupported Storage API library: {storage_api}")
 
     def prefill_storage(self, storage, data):
         """Initializes a collection with provided data source and metadata builder."""

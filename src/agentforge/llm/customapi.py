@@ -17,10 +17,7 @@ def request_completion(prompt):
 
     response = requests.post(url, headers=headers, data=json.dumps(data))
 
-    if response.status_code == 200:
-        return response.json()
-    else:
-        return None
+    return response.json() if response.status_code == 200 else None
 
 # Example usage:
 prompt = "What does the cow say?"

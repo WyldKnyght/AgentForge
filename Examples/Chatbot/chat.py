@@ -227,7 +227,7 @@ class Chatbot:
 
         # Ensure it's not a valid IPv4 address
         if re.match(r'^\d+\.\d+\.\d+\.\d+$', input_str):
-            input_str = "a" + input_str
+            input_str = f"a{input_str}"
 
         # Ensure length is between 3 and 63 characters
         while len(input_str) < 3:
@@ -237,9 +237,9 @@ class Chatbot:
 
         # Ensure it starts and ends with an alphanumeric character
         if not input_str[0].isalnum():
-            input_str = "a" + input_str[1:]
+            input_str = f"a{input_str[1:]}"
         if not input_str[-1].isalnum():
-            input_str = input_str[:-1] + "a"
+            input_str = f"{input_str[:-1]}a"
 
         return input_str
 
@@ -248,8 +248,6 @@ class Chatbot:
 
         if self.selected_action:
             self.execute_action()
-        else:
-            pass
 
     def execute_action(self):
         action_results = self.action_execution.run(action=self.selected_action, context=self.message)

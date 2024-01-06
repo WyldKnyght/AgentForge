@@ -33,19 +33,14 @@ def google_search(query, number_result=5):
         else:
             return f"Error: {e}"
 
-    parsed_results = parse_tool_results(search_results_links)
-
-    # Return the list of search result URLs
-    return parsed_results
+    return parse_tool_results(search_results_links)
 
 
 def parse_tool_results(tool_result):
-    if isinstance(tool_result, list):
-        # Format each search result
-        formatted_results = [f"URL: {url}\nDescription: {desc}\n---" for url, desc in tool_result]
-        # Join all results into a single string
-        final_output = "\n".join(formatted_results)
-    else:
-        final_output = tool_result
+    if not isinstance(tool_result, list):
+        return tool_result
 
-    return final_output
+    # Format each search result
+    formatted_results = [f"URL: {url}\nDescription: {desc}\n---" for url, desc in tool_result]
+        # Join all results into a single string
+    return "\n".join(formatted_results)

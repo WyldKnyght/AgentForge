@@ -14,7 +14,7 @@ _level = 'debug'
 
 
 def parse_prompts(prompts):
-    prompt = ''.join(prompts[0:])
+    prompt = ''.join(prompts[:])
 
     if _level == 'debug':
         cprint(f'\nPrompt:\n"{prompt}"', 'magenta', attrs=['concealed'])

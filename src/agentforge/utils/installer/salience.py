@@ -92,12 +92,7 @@ class Salience:
         if status is not None:
             completed = status['status']
 
-            if 'not completed' in completed:
-                result = status['reason']
-            else:
-                result = None
-
-            return result
+            return status['reason'] if 'not completed' in completed else None
 
     def select_action(self):
         self.selected_action = None
@@ -185,10 +180,10 @@ class Salience:
 
     def log_results(self):
         self.logger.log(f"Execution Results: {self.task['execution_results']}", 'debug')
-        self.logger.log(f"Agent Done!", 'info')
+        self.logger.log("Agent Done!", 'info')
 
     def log_start(self):
-        self.logger.log(f"Running Agent ...", 'info')
+        self.logger.log("Running Agent ...", 'info')
 
     def prepare_ordered_results(self):
         self.data['task_ids'] = self.data['ordered_list']['ids']
