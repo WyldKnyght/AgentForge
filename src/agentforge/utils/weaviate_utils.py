@@ -34,14 +34,12 @@ class WeaviateUtils:
 
     def peek(self, collection_name):
         self.select_collection(collection_name)
-        result = self.collection.get()
-        return result
+        return self.collection.get()
 
     def load_collection(self, params):
         collection_name = params.pop('collection_name')
         self.select_collection(collection_name)
-        result = self.collection.get(params)
-        return result
+        return self.collection.get(params)
 
     def save_batch(self, params):
         collection_name = params.pop('collection_name')
@@ -59,8 +57,7 @@ class WeaviateUtils:
         collection_name = params.pop('collection_name')
         self.select_collection(collection_name)
 
-        result = self.collection.query(params)
-        return result
+        return self.collection.query(params)
 
     # other methods
     # Reset weaviate data
@@ -76,11 +73,7 @@ class WeaviateUtils:
 
     # Search by vector similarity
     def vector_search(self, vector, params):
-        result = self.client.query.vector(
-            vector=vector,
-            params=params
-        )
-        return result
+        return self.client.query.vector(vector=vector, params=params)
 
     # Delete objects
     def delete_objects(self, className, ids):

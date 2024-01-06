@@ -17,12 +17,10 @@ def parse_prompts(prompts):
         prompt = ''.join(prompts)
         cprint(f'\nPrompt:\n"{prompt}"', 'magenta', attrs=['concealed'])
 
-    prompt = [
+    return [
         {"role": "system", "content": prompts[0]},
-        {"role": "user", "content": "".join(prompts[1:])}
+        {"role": "user", "content": "".join(prompts[1:])},
     ]
-
-    return prompt
 
 
 class GPT:
@@ -59,12 +57,11 @@ class GPT:
                 print("\n\nError: Connection issue, retrying in 2 seconds...")
                 time.sleep(2)
             except APIError as e:
-                if e.status_code == 502:
-                    print(f"\n\nError: Bad gateway, retrying in {backoff} seconds...")
-                    time.sleep(backoff)
-                else:
+                if e.status_code != 502:
                     raise
 
+                print(f"\n\nError: Bad gateway, retrying in {backoff} seconds...")
+                time.sleep(backoff)
         # reply will be none if we have failed above
         if reply is None:
             raise RuntimeError("\n\nError: Failed to get OpenAI Response")

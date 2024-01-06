@@ -11,10 +11,10 @@ class UserInterface:
 
     def get_user_input(self):
         feedback = None
-        msg = "\nPress Enter to Continue | Type 'auto' for Auto Mode | Type 'exit' to Exit | Or Provide Feedback: "
-
         # Check if the mode is manual
         if self.mode == 'manual':
+            msg = "\nPress Enter to Continue | Type 'auto' for Auto Mode | Type 'exit' to Exit | Or Provide Feedback: "
+
             user_input = input(msg)
             if user_input.lower() == '':
                 pass

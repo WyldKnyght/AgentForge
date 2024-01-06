@@ -69,9 +69,8 @@ class AgentUtils:
             user_input = input("\nDefine Objective (leave empty to use defaults): ")
             if user_input.lower() == '':
                 return None
-            else:
-                self.config.settings['directives']['Objective'] = user_input
-                return user_input
+            self.config.settings['directives']['Objective'] = user_input
+            return user_input
 
     def parse_yaml_string(self, yaml_string):
         try:
@@ -84,9 +83,7 @@ class AgentUtils:
     def extract_yaml_block(text):
         # Regex pattern to capture content between ```yaml and ```
         pattern = r"```yaml(.*?)```"
-        match = re.search(pattern, text, re.DOTALL)
-
-        if match:
+        if match := re.search(pattern, text, re.DOTALL):
             # Return the extracted content
             return match.group(1).strip()
         else:

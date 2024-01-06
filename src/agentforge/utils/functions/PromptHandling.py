@@ -11,16 +11,11 @@ class PromptHandling:
 
     def handle_prompt_template(self, prompt_template, data):
         """Return the template if all its required variables are present in the data and are not empty."""
-        required_vars = self.extract_prompt_variables(prompt_template)
-
-        # If there are no required variables, return the template as is
-        if not required_vars:
+        if required_vars := self.extract_prompt_variables(prompt_template):
+                # Check if all required_vars are in data and not empty
+            return prompt_template if all(data.get(var) for var in required_vars) else None
+        else:
             return prompt_template
-
-        # Check if all required_vars are in data and not empty
-        if all(data.get(var) for var in required_vars):  # This will fail for empty strings, None, etc.
-            return prompt_template
-        return None
 
     def render_prompt_template(self, template, data):
         """Replace each variable in the template with its value from data"""

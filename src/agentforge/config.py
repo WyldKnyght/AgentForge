@@ -75,11 +75,7 @@ class Config:
         db_embed = db_settings.get('embedding', None)
 
         # Construct the absolute path of the database using the project root
-        if db_path_setting:
-            db_path = str(self.project_root / db_path_setting)
-        else:
-            db_path = None
-
+        db_path = str(self.project_root / db_path_setting) if db_path_setting else None
         return db_path, db_embed
 
     def find_file_in_directory(self, directory, filename):
@@ -125,8 +121,9 @@ class Config:
             raise
 
     def load_agent(self, agent_name):
-        path_to_file = self.find_file_in_directory("agents", f"{agent_name}.yaml")
-        if path_to_file:
+        if path_to_file := self.find_file_in_directory(
+            "agents", f"{agent_name}.yaml"
+        ):
             self.agent = get_yaml_data(path_to_file)
         else:
             raise FileNotFoundError(f"Agent {agent_name}.yaml not found.")

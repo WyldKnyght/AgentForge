@@ -52,7 +52,7 @@ class UserInput:
         - The choice selected by the user.
         """
         while True:
-            response = self.get_input(prompt + " " + "/".join(choices) + ": ").lower()
+            response = self.get_input(f"{prompt} " + "/".join(choices) + ": ").lower()
             if response in choices:
                 return response
             print(f"Please select one of the following: {', '.join(choices)}")

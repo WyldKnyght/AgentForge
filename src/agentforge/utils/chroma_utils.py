@@ -83,12 +83,11 @@ class ChromaUtils:
         max_result_count = self.collection.count()
         num_results = min(1, max_result_count)
 
-        if num_results > 0:
-            result = self.collection.peek()
-        else:
-            result = {'documents': "No Results!"}
-
-        return result
+        return (
+            self.collection.peek()
+            if num_results > 0
+            else {'documents': "No Results!"}
+        )
 
     def load_collection(self, params):
         try:
@@ -96,8 +95,7 @@ class ChromaUtils:
 
             self.select_collection(collection_name)
 
-            where = params.pop('filter', {})
-            if where:
+            if where := params.pop('filter', {}):
                 params.update(where=where)
             data = self.collection.get(**params)
 

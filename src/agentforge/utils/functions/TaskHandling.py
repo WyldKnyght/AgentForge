@@ -15,16 +15,18 @@ class TaskHandling:
     def get_current_task(self):
         ordered_list = self.get_ordered_task_list()
 
-        current_task = None
-        # iterate over sorted_metadatas
-        for i, metadata in enumerate(ordered_list['metadatas']):
-            # check if the Task Status is not completed
-            if metadata['Status'] == 'not completed':
-                current_task = {'id': ordered_list['ids'][i], 'document': ordered_list['documents'][i],
-                                'metadata': metadata}
-                break  # break the loop as soon as we find the first not_completed task
-
-        return current_task
+        return next(
+            (
+                {
+                    'id': ordered_list['ids'][i],
+                    'document': ordered_list['documents'][i],
+                    'metadata': metadata,
+                }
+                for i, metadata in enumerate(ordered_list['metadatas'])
+                if metadata['Status'] == 'not completed'
+            ),
+            None,
+        )
 
     def get_ordered_task_list(self):
         # Load Tasks
@@ -42,13 +44,12 @@ class TaskHandling:
         # split the sorted tasks back into separate lists
         sorted_ids, sorted_documents, sorted_metadatas = zip(*sorted_tasks)
 
-        # create the ordered results dictionary
-        ordered_list = {'ids': list(sorted_ids),
-                        'embeddings': task_collection['embeddings'],
-                        'documents': list(sorted_documents),
-                        'metadatas': list(sorted_metadatas)}
-
-        return ordered_list
+        return {
+            'ids': list(sorted_ids),
+            'embeddings': task_collection['embeddings'],
+            'documents': list(sorted_documents),
+            'metadatas': list(sorted_metadatas),
+        }
 
     @staticmethod
     def log_tasks(tasks):
@@ -84,9 +85,9 @@ class TaskHandling:
                 status_text = colored("not completed", 'red')
 
             print(f"{task_order}: {task_desc} - {status_text}")
-            result = result + f"\n{task_order}: {task_desc}"
+            result = f"{result}\n{task_order}: {task_desc}"
 
-        cprint(f"*****", 'blue', attrs=['bold'])
+        cprint("*****", 'blue', attrs=['bold'])
 
         self.log_tasks(result)
 

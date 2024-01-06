@@ -7,13 +7,12 @@ class GetText:
     def read_file(self, filename_or_url):
         if filename_or_url.startswith('http://') or filename_or_url.startswith('https://'):
             return self.read_from_url(filename_or_url)
+        if filename_or_url.endswith('.pdf'):
+            return self.read_pdf(filename_or_url)
+        elif filename_or_url.endswith('.txt'):
+            return self.read_txt(filename_or_url)
         else:
-            if filename_or_url.endswith('.pdf'):
-                return self.read_pdf(filename_or_url)
-            elif filename_or_url.endswith('.txt'):
-                return self.read_txt(filename_or_url)
-            else:
-                return "Unsupported file format"
+            return "Unsupported file format"
 
     def read_pdf(self, filename):
         with open(filename, 'rb') as file:
@@ -36,11 +35,8 @@ class GetText:
 
     @staticmethod
     def extract_text_from_pdf(file_stream):
-        text = ""
         reader = PyPDF2.PdfReader(file_stream)
-        for page in reader.pages:
-            text += page.extract_text()
-        return text
+        return "".join(page.extract_text() for page in reader.pages)
 
 
 if __name__ == "__main__":
